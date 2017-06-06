@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>React + Spring</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+	<div id='root'></div>
+	<div id='empDetails'></div>
+	<div id='AllEmpDetails'></div>
+	
+
+	<script src="https://fb.me/react-15.0.1.js"></script>
+	<script src="https://fb.me/react-dom-15.0.1.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+
+	<script type="text/babel">
+		var Emp = React.createClass({
+			render: function() {
+   		 		return (<div><h2>Empolyee</h2></div>);
+ 			 }
+		});
+
+		var EmpDetails = React.createClass({
+			
+			getInitialState: function () {
+    			return {test: []};
+	
+  			},
+			loadEmployeesFromServer: function() {
+ 
+			fetch('http://localhost:8084/empDetails').then(response => {
+  				if (response.ok) {
+    				response.json().then(json => {
+      				alert(JSON.stringify(json));
+					this.setState({test: json});
+    			});
+  			}
+			});
+		},
+ 
+ 
+  componentDidMount: function () {
+    this.loadEmployeesFromServer();
+  },
+
+
+  render() {
+
+    return ( 
+	
+ <table>
+<thead><th>A</th><th>B</th></thead>
+<tbody>
+<tr><td>{this.state.test["A"]}</td>
+	<td>{this.state.test["B"]}</td>
+</tr></tbody>
+
+       </table>
+	);
+
+  }
+
+		});
+	
+	ReactDOM.render(<Emp/>,document.getElementById('root'));
+	//ReactDOM.render(<EmpDetails />,document.getElementById('empDetails'));
+</script>
+
+<!-- <script type="text/babel" src="./employee.jsx" /> -->
+
+</body>
+</html>
